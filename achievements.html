@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Competition achievements and awards of Chhavi Mishra — ADDC AIR 2, Aerothon AIR 1, and more." />
+  <title>Achievements | Chhavi Mishra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <style>
+    .achievements-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .ach-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .ach-stat .num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .ach-stat .lbl { color: var(--text-secondary); font-size: 0.82rem; }
+    .num-gold { color: var(--gold); }
+    .num-blue { color: var(--accent); }
+
+    /* Main achievement cards */
+    .ach-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      transition: border-color 0.25s;
+    }
+    .ach-card:hover { border-color: var(--border-accent); }
+    .ach-header {
+      padding: 2rem 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    .ach-medal {
+      width: 60px; height: 60px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .medal-gold { background: var(--gold-glow); border: 1px solid rgba(246,201,14,0.25); }
+    .medal-silver { background: rgba(180,180,200,0.1); border: 1px solid rgba(180,180,200,0.2); }
+    .ach-header-info { flex: 1; }
+    .ach-rank {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .rank-gold { color: var(--gold); }
+    .rank-silver { color: #a0aec0; }
+    .ach-title { font-family: var(--font-display); font-size: 1.6rem; color: var(--text-primary); margin-bottom: 0.4rem; line-height: 1.2; }
+    .ach-org { color: var(--text-secondary); font-size: 0.9rem; }
+    .ach-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+
+    .ach-body { padding: 1.75rem 2.5rem; }
+    .ach-body p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.25rem; font-size: 0.95rem; }
+    .ach-body p strong { color: var(--text-primary); }
+
+    .contribs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+    .contrib-block h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .contrib-list { list-style: none; }
+    .contrib-list li {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+      margin-bottom: 0.45rem;
+      line-height: 1.5;
+    }
+    .contrib-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; font-size: 0.85rem; }
+    .ach-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem; }
+
+    /* ===== CERTIFICATES SECTION ===== */
+    .certs-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin: 3rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .certs-title::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 2px;
+    }
+
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.25s;
+      position: relative;
+    }
+    .cert-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .cert-card-header {
+      padding: 1.4rem 1.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-card-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .cert-issuer-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .cert-issuer-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 5px;
+    }
+    .cert-issuer-badge.infosys {
+      background: rgba(14, 165, 233, 0.12);
+      color: #0ea5e9;
+      border: 1px solid rgba(14, 165, 233, 0.25);
+    }
+    .cert-issuer-badge.ibm {
+      background: rgba(30, 100, 200, 0.12);
+      color: #1e64c8;
+      border: 1px solid rgba(30, 100, 200, 0.25);
+    }
+    .cert-platform-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .cert-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      line-height: 1.35;
+      margin-bottom: 0.4rem;
+    }
+    .cert-card-body {
+      padding: 1rem 1.5rem 1.3rem;
+    }
+    .cert-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+    .cert-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .cert-meta-item .cert-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .cert-skills-label {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .cert-skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .cert-verified-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: #22c55e;
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .achievements-stats { grid-template-columns: repeat(2, 1fr); }
+      .ach-header { flex-direction: column; gap: 1rem; padding: 1.5rem; }
+      .ach-body { padding: 1.5rem; }
+      .contribs-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <nav>
+    <a href="index.html" class="nav-brand"><span>CM</span>Chhavi Mishra</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="learnings.html">Learnings</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="achievements.html">Achievements</a></li>
+      <li><a href="certificates.html">Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="page-wrapper">
+    <section>
+      <div class="section-header fade-up fade-up-1">
+        <div class="section-line"></div>
+        <h1>Achievements</h1>
+        <p>National competition rankings and recognition for autonomous systems and AI engineering.</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="achievements-stats fade-up fade-up-2" style="grid-template-columns: repeat(2,1fr);">
+        <div class="ach-stat">
+          <span class="num num-gold">3</span>
+          <span class="lbl">Certifications</span>
+        </div>
+        <div class="ach-stat">
+          <span class="num num-blue">2nd</span>
+          <span class="lbl">Hackathon Rank</span>
+        </div>
+      </div>
+
+      <!-- Hackathon -->
+      <div class="ach-card fade-up fade-up-4">
+        <div class="ach-header">
+          <div class="ach-medal medal-silver">🥈</div>
+          <div class="ach-header-info">
+            <div class="ach-rank rank-silver">2nd Position</div>
+            <div class="ach-title">Online Exam Proctoring Hackathon</div>
+            <div class="ach-org">Hackathon – 3rd Semester</div>
+            <div class="ach-badges">
+              <span class="badge badge-blue">2nd Place</span>
+              <span class="badge badge-green">Computer Vision</span>
+              <span class="badge badge-blue">ML Security</span>
+            </div>
+          </div>
+        </div>
+        <div class="ach-body">
+          <p>Secured <strong>2nd position in a hackathon</strong> during the 3rd semester for building the Online Exam Proctoring Algorithm Analyser — a comprehensive benchmarking system evaluating computer vision and audio-analysis algorithms for maintaining academic integrity in remote examinations.</p>
+          <p>The system demonstrated trade-offs between security, privacy, and resource accessibility across multiple proctoring techniques including <strong>YOLO, MediaPipe, and Dlib</strong>, with a React.js dashboard for real-time visualization of latency, false-positive rates, and CPU/GPU consumption.</p>
+          <div class="ach-tags">
+            <span class="tag">Python</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">MediaPipe</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">Flask</span>
+            <span class="tag">React.js</span>
+            <span class="tag">Algorithm Benchmarking</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CERTIFICATES SECTION ===== -->
+      <div class="certs-title fade-up fade-up-4">🏅 Certifications</div>
+      <div class="certs-grid">
+
+        <!-- Infosys DevOps Foundation -->
+        <div class="cert-card fade-up fade-up-4">
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge infosys">Infosys</span>
+              <span class="cert-platform-tag">Springboard</span>
+            </div>
+            <div class="cert-name">DevOps Foundation Certification</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>May 26, 2026</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>Infosys Limited</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Principles</span>
+              <span class="tag">CI/CD</span>
+              <span class="tag">Agile</span>
+              <span class="tag">Version Control</span>
+              <span class="tag">Automation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- IBM DevOps Basics -->
+        <div class="cert-card fade-up fade-up-4">
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge ibm">IBM</span>
+              <span class="cert-platform-tag">edX · IBM Online</span>
+            </div>
+            <div class="cert-name">DevOps Basics for Everyone</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>Verified Certificate</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>IBM</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Culture</span>
+              <span class="tag">Continuous Delivery</span>
+              <span class="tag">Cloud Native</span>
+              <span class="tag">Infrastructure</span>
+              <span class="tag">Testing</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infosys TechA DevOps Engineer -->
+        <div class="cert-card fade-up fade-up-4">
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge infosys">Infosys</span>
+              <span class="cert-platform-tag">Springboard</span>
+            </div>
+            <div class="cert-name">TechA DevOps Engineer Certification</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>May 26, 2026</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>Infosys Limited</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Engineering</span>
+              <span class="tag">Pipeline Automation</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Monitoring</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Chhavi Mishra. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

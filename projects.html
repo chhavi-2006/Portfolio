@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Academic and competition projects by Chhavi Mishra — AI, drones, full-stack and embedded systems." />
+  <title>Projects | Chhavi Mishra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <style>
+    /* ===== FEATURED PROJECT ===== */
+    .featured-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .featured-label::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+
+    .featured-project {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+      transition: border-color 0.25s;
+    }
+    .featured-project:hover { border-color: var(--border-accent); }
+
+    .project-visual {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem;
+      min-height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, var(--accent-glow) 0%, transparent 70%);
+    }
+    .arch-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .arch-box {
+      background: var(--arch-box-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .arch-box.accent { border-color: var(--border-accent); color: var(--accent); background: var(--accent-glow); }
+    .arch-arrow {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin: 0 0.25rem;
+    }
+
+    .project-body { padding: 2rem 2.5rem; }
+    .project-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .project-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--text-primary); margin-bottom: 0.75rem; }
+    .project-desc { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem; max-width: 680px; }
+    .project-features { margin-bottom: 1.5rem; }
+    .project-features h4 { color: var(--text-primary); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .feature-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .feature-list li {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      line-height: 1.5;
+    }
+    .feature-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+
+    /* ===== MORE PROJECTS GRID ===== */
+    .more-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover { background: var(--bg-card-hover); border-color: var(--border-accent); transform: translateY(-3px); }
+    .project-card-visual {
+      height: 100px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, var(--accent-glow) 0%, transparent 70%);
+    }
+    .project-card-icon {
+      font-size: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .project-card-body { padding: 1.4rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-card-cat { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .project-card-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.6rem; }
+    .project-card-desc { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; flex: 1; }
+    .project-card-features { margin-bottom: 1rem; }
+    .project-card-features li { color: var(--text-secondary); font-size: 0.82rem; display: flex; gap: 0.4rem; align-items: flex-start; margin-bottom: 0.3rem; line-height: 1.5; }
+    .project-card-features li::before { content: '·'; color: var(--accent); flex-shrink: 0; font-size: 1.2rem; line-height: 1.2; }
+    .project-card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    @media (max-width: 768px) {
+      .project-body { padding: 1.5rem; }
+      .feature-list { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <nav>
+    <a href="index.html" class="nav-brand"><span>CM</span>Chhavi Mishra</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="learnings.html">Learnings</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="achievements.html">Achievements</a></li>
+      <li><a href="certificates.html">Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="page-wrapper">
+    <section>
+      <div class="section-header fade-up fade-up-1">
+        <div class="section-line"></div>
+        <h1>Projects</h1>
+        <p>AI systems, autonomous drones, and intelligent applications I've engineered.</p>
+      </div>
+
+      <!-- FEATURED: Smart Guardian -->
+      <div class="fade-up fade-up-2">
+        <div class="featured-label">Featured Project — 4th Semester</div>
+        <div class="featured-project">
+          <div class="project-visual">
+            <div class="arch-diagram">
+              <div class="arch-box accent">Raspberry Pi 5<br/><span style="font-size:0.65rem;opacity:0.7">Edge Node</span></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-box">YOLOv8<br/><span style="font-size:0.65rem;opacity:0.7">Fog AI</span></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-box">Pixhawk IMU<br/><span style="font-size:0.65rem;opacity:0.7">Crash Sensor</span></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-box accent">Supabase Cloud<br/><span style="font-size:0.65rem;opacity:0.7">+ WhatsApp SOS</span></div>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta">
+              <span class="badge badge-blue">IoT · Edge AI</span>
+              <span class="badge badge-green">Team Project</span>
+            </div>
+            <div class="project-title">Smart Guardian – AI Motorcycle Black-Box & ADAS</div>
+            <p class="project-desc">Engineered a distributed intelligent safety system for motorcycles that combines Advanced Driver Assistance Systems (ADAS) and a digital black-box recorder. The platform uses real-time computer vision, sensor fusion, and an Edge–Fog–Cloud architecture to detect hazards, warn riders proactively, and autonomously trigger emergency response pipelines during accident events.</p>
+            <div class="project-features">
+              <h4>Key Features</h4>
+              <ul class="feature-list">
+                <li>Real-time tailgating detection with custom-trained YOLOv8 model</li>
+                <li>Crash & rollover detection via Pixhawk IMU physics-based thresholds</li>
+                <li>Circular video buffer storing previous 10 seconds of evidence footage</li>
+                <li>Automated WhatsApp SOS alerts with live GPS location and video</li>
+                <li>Cloud incident upload pipeline to Supabase backend</li>
+                <li>Real-time buzzer warning system for proactive rider alerts</li>
+              </ul>
+            </div>
+            <div class="project-features" style="margin-bottom:1.5rem;">
+              <h4>My Contributions</h4>
+              <ul class="feature-list">
+                <li>Configured Pixhawk telemetry via MAVLink protocol</li>
+                <li>Built ZeroMQ inter-device communication on Raspberry Pi</li>
+                <li>Developed crash-event handling and cloud connectivity logic</li>
+                <li>Conducted system integration, testing, and end-to-end validation</li>
+              </ul>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Raspberry Pi 5</span>
+              <span class="tag">Pixhawk</span>
+              <span class="tag">YOLOv8</span>
+              <span class="tag">Python</span>
+              <span class="tag">OpenCV</span>
+              <span class="tag">MAVLink</span>
+              <span class="tag">ZeroMQ</span>
+              <span class="tag">Supabase</span>
+              <span class="tag">Streamlit</span>
+            </div>
+            <a href="#" class="btn btn-ghost" style="font-size:0.85rem;">View Repository ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MORE PROJECTS -->
+      <div class="more-title fade-up fade-up-3">More Engineering Projects</div>
+      <div class="projects-grid">
+
+        <!-- Vaani.AI -->
+        <div class="project-card fade-up fade-up-3">
+          <div class="project-card-visual">
+            <span class="project-card-icon">🩺</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">AI / Healthcare · Full-Stack · 4th Semester</div>
+            <div class="project-card-title">Vaani.AI – Clinical Documentation Assistant</div>
+            <p class="project-card-desc">Intelligent healthcare web app that automates clinical documentation through real-time multilingual speech transcription, AI-based medical entity extraction, sentiment analysis, and structured report generation from doctor–patient conversations.</p>
+            <ul class="project-card-features list-none">
+              <li>Real-time multilingual STT (English + Indian languages via Sarvam AI)</li>
+              <li>AI extraction of symptoms, diagnoses, prescriptions &amp; vitals using Gemini 2.5</li>
+              <li>Conversational chatbot for querying historical medical records</li>
+              <li>PDF clinical report generation; RBAC (doctor/patient roles) via JWT &amp; bcrypt</li>
+            </ul>
+            <div class="project-card-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Gemini 2.5</span>
+              <span class="tag">Sarvam AI</span>
+              <span class="tag">Groq Llama</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">FastAPI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Online Exam Proctoring -->
+        <div class="project-card fade-up fade-up-3">
+          <div class="project-card-visual">
+            <span class="project-card-icon">👁️</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">ML / Computer Vision · 🏆 Hackathon 2nd Place · 3rd Semester</div>
+            <div class="project-card-title">Online Exam Proctoring Analyser</div>
+            <p class="project-card-desc">Comprehensive benchmarking system to analyze and evaluate computer vision and audio-analysis proctoring algorithms for maintaining academic integrity in remote examinations. <strong>Won 2nd place at a hackathon.</strong></p>
+            <ul class="project-card-features list-none">
+              <li>Head pose estimation, eye-gaze tracking &amp; multi-face detection</li>
+              <li>Background noise analysis for unauthorized communication detection</li>
+              <li>Latency, CPU/GPU benchmarking of YOLO, MediaPipe, Dlib models</li>
+              <li>Interactive React.js dashboard for performance metric visualization</li>
+            </ul>
+            <div class="project-card-tags">
+              <span class="tag">Python</span>
+              <span class="tag">OpenCV</span>
+              <span class="tag">MediaPipe</span>
+              <span class="tag">TensorFlow</span>
+              <span class="tag">Flask</span>
+              <span class="tag">React.js</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mouse Master -->
+        <div class="project-card fade-up fade-up-4">
+          <div class="project-card-visual">
+            <span class="project-card-icon">🖱️</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-card-cat">Hardware Prototyping · Engineering Exploration · 1st Semester</div>
+            <div class="project-card-title">Mouse Master – Smart Portable Controller</div>
+            <p class="project-card-desc">Compact 2×2×2 inch smart mouse controller engineered to replicate traditional mouse functions with a joystick, tactile buttons, and rotary encoder — designed as an assistive and portable HID device. Built for KLE Technological University's Engineering Exploration course.</p>
+            <ul class="project-card-features list-none">
+              <li>Joystick-based cursor movement with precise response mapping</li>
+              <li>Rotary encoder scroll implementation for smooth navigation</li>
+              <li>Full prototype within ₹4,000 budget with 3+ hour battery life</li>
+              <li>3D CAD modelling and sprint-based prototype iteration (3 sprints)</li>
+            </ul>
+            <div class="project-card-tags">
+              <span class="tag">Microcontroller</span>
+              <span class="tag">CAD / 3D Modelling</span>
+              <span class="tag">Circuit Design</span>
+              <span class="tag">Agile Sprints</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Chhavi Mishra. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

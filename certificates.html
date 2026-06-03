@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Certifications earned by Chhavi Mishra — Infosys, IBM, and more across DevOps, AI, and software engineering." />
+  <title>Certificates | Chhavi Mishra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <style>
+    /* ===== STATS ROW ===== */
+    .cert-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .cert-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .cert-stat:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+    .cert-stat .num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .cert-stat .lbl { color: var(--text-secondary); font-size: 0.82rem; }
+    .num-accent { color: var(--accent); }
+    .num-gold   { color: var(--gold); }
+    .num-green  { color: #22c55e; }
+
+    /* ===== FILTER TABS ===== */
+    .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .filter-tab {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-tab:hover, .filter-tab.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* ===== CERTIFICATES GRID ===== */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .cert-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+    .cert-card.hidden { display: none; }
+
+    /* Top accent bar */
+    .cert-card-accent { height: 3px; width: 100%; }
+    .accent-infosys { background: linear-gradient(90deg, #0ea5e9, #38bdf8); }
+    .accent-ibm     { background: linear-gradient(90deg, #1e64c8, #6095e8); }
+    .accent-default { background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+    /* ===== CERTIFICATE IMAGE THUMBNAIL ===== */
+    .cert-img-thumb {
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: var(--bg-secondary, #f8f9fa);
+    }
+    .cert-img-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.4s ease;
+      display: block;
+    }
+    .cert-card:hover .cert-img-thumb img { transform: scale(1.04); }
+    .cert-img-thumb .thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cert-card:hover .thumb-overlay { opacity: 1; }
+    .thumb-overlay span {
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.6);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Header & body */
+    .cert-card-header {
+      padding: 1.2rem 1.5rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .cert-verified-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: #22c55e;
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+      border-radius: 4px;
+    }
+    .cert-issuer-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .cert-issuer-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.6rem;
+      border-radius: 5px;
+    }
+    .badge-infosys { background: rgba(14,165,233,0.12); color: #0ea5e9; border: 1px solid rgba(14,165,233,0.25); }
+    .badge-ibm     { background: rgba(30,100,200,0.12); color: #1e64c8; border: 1px solid rgba(30,100,200,0.25); }
+    .cert-platform-tag { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-muted); }
+    .cert-name {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      color: var(--text-primary);
+      line-height: 1.35;
+      padding-right: 4.5rem;
+    }
+
+    .cert-card-body { padding: 1rem 1.5rem 1.25rem; }
+    .cert-meta-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.9rem; }
+    .cert-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .cert-skills-label {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .cert-skill-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+    /* View button */
+    .cert-view-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .cert-view-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ===== LIGHTBOX MODAL ===== */
+    .cert-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .cert-lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(6px);
+    }
+    .lightbox-content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+    .cert-lightbox.open .lightbox-content { transform: scale(1); }
+    .lightbox-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .lightbox-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+    .lightbox-close {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+    .lightbox-img-wrap {
+      padding: 1.5rem;
+      background: #f5f5f5;
+    }
+    .lightbox-img-wrap img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Empty state */
+    .certs-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      display: none;
+    }
+    .certs-empty.visible { display: block; }
+
+    @media (max-width: 768px) {
+      .cert-stats { grid-template-columns: repeat(2, 1fr); }
+      .certs-grid { grid-template-columns: 1fr; }
+      .lightbox-img-wrap { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <nav>
+    <a href="index.html" class="nav-brand"><span>CM</span>Chhavi Mishra</a>
+    <div class="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="learnings.html">Learnings</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="achievements.html">Achievements</a></li>
+      <li><a href="certificates.html" class="nav-active">Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <section>
+
+      <!-- Page Header -->
+      <div class="section-header fade-up fade-up-1">
+        <div class="section-line"></div>
+        <h1>Certificates</h1>
+        <p>Industry-recognized certifications in DevOps, AI, and software engineering from leading platforms.</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="cert-stats fade-up fade-up-2">
+        <div class="cert-stat">
+          <span class="num num-accent">3</span>
+          <span class="lbl">Total Certificates</span>
+        </div>
+        <div class="cert-stat">
+          <span class="num num-green">3</span>
+          <span class="lbl">Verified</span>
+        </div>
+        <div class="cert-stat">
+          <span class="num num-gold">2</span>
+          <span class="lbl">Issuers</span>
+        </div>
+        <div class="cert-stat">
+          <span class="num num-accent">2026</span>
+          <span class="lbl">Latest Year</span>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs fade-up fade-up-2" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="infosys">Infosys</button>
+        <button class="filter-tab" data-filter="ibm">IBM</button>
+        <button class="filter-tab" data-filter="devops">DevOps</button>
+      </div>
+
+      <!-- Certificates Grid -->
+      <div class="certs-grid fade-up fade-up-3" id="certsGrid">
+
+        <!-- TechA DevOps Engineer -->
+        <div class="cert-card" data-category="infosys devops">
+          <div class="cert-card-accent accent-infosys"></div>
+          <div class="cert-img-thumb" onclick="openLightbox('assets/images/certificates/cert-devops-foundation.png', 'TechA DevOps Engineer Certification')">
+            <img src="assets/images/certificates/cert-devops-foundation.png" alt="TechA DevOps Engineer Certificate" loading="lazy" />
+            <div class="thumb-overlay"><span>🔍 View Certificate</span></div>
+          </div>
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge badge-infosys">Infosys</span>
+              <span class="cert-platform-tag">Springboard</span>
+            </div>
+            <div class="cert-name">TechA DevOps Engineer Certification</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>May 26, 2026</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>Infosys Limited</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Engineering</span>
+              <span class="tag">Pipeline Automation</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Monitoring</span>
+            </div>
+            <button class="cert-view-btn" onclick="openLightbox('assets/images/certificates/cert-devops-foundation.png', 'TechA DevOps Engineer Certification')">
+              ↗ View Certificate
+            </button>
+          </div>
+        </div>
+
+        <!-- DevOps Foundation -->
+        <div class="cert-card" data-category="infosys devops">
+          <div class="cert-card-accent accent-infosys"></div>
+          <div class="cert-img-thumb" onclick="openLightbox('assets/images/certificates/cert-techa-devops.png', 'DevOps Foundation Certification')">
+            <img src="assets/images/certificates/cert-techa-devops.png" alt="DevOps Foundation Certificate" loading="lazy" />
+            <div class="thumb-overlay"><span>🔍 View Certificate</span></div>
+          </div>
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge badge-infosys">Infosys</span>
+              <span class="cert-platform-tag">Springboard</span>
+            </div>
+            <div class="cert-name">DevOps Foundation Certification</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>May 26, 2026</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>Infosys Limited</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Principles</span>
+              <span class="tag">CI/CD</span>
+              <span class="tag">Agile</span>
+              <span class="tag">Version Control</span>
+              <span class="tag">Automation</span>
+            </div>
+            <button class="cert-view-btn" onclick="openLightbox('assets/images/certificates/cert-techa-devops.png', 'DevOps Foundation Certification')">
+              ↗ View Certificate
+            </button>
+          </div>
+        </div>
+
+        <!-- IBM DevOps Basics -->
+        <div class="cert-card" data-category="ibm devops">
+          <div class="cert-card-accent accent-ibm"></div>
+          <div class="cert-img-thumb" onclick="openLightbox('assets/images/certificates/cert-ibm-devops.jpeg', 'DevOps Basics for Everyone')">
+            <img src="assets/images/certificates/cert-ibm-devops.jpeg" alt="IBM DevOps Basics Certificate" loading="lazy" />
+            <div class="thumb-overlay"><span>🔍 View Certificate</span></div>
+          </div>
+          <div class="cert-card-header">
+            <span class="cert-verified-badge">✓ Verified</span>
+            <div class="cert-issuer-row">
+              <span class="cert-issuer-badge badge-ibm">IBM</span>
+              <span class="cert-platform-tag">edX · IBM Online</span>
+            </div>
+            <div class="cert-name">DevOps Basics for Everyone</div>
+          </div>
+          <div class="cert-card-body">
+            <div class="cert-meta-row">
+              <span class="cert-meta-item"><span class="cert-dot"></span>Verified Certificate</span>
+              <span class="cert-meta-item"><span class="cert-dot"></span>IBM</span>
+            </div>
+            <div class="cert-skills-label">Skills Covered</div>
+            <div class="cert-skill-tags">
+              <span class="tag">DevOps Culture</span>
+              <span class="tag">Continuous Delivery</span>
+              <span class="tag">Cloud Native</span>
+              <span class="tag">Infrastructure</span>
+              <span class="tag">Testing</span>
+            </div>
+            <button class="cert-view-btn" onclick="openLightbox('assets/images/certificates/cert-ibm-devops.jpeg', 'DevOps Basics for Everyone')">
+              ↗ View Certificate
+            </button>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="certs-empty" id="certsEmpty">No certificates found for this filter.</div>
+
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Chhavi Mishra. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="cert-lightbox" id="certLightbox">
+    <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+    <div class="lightbox-content">
+      <div class="lightbox-header">
+        <span class="lightbox-title" id="lightboxTitle">Certificate</span>
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+      </div>
+      <div class="lightbox-img-wrap">
+        <img id="lightboxImg" src="" alt="Certificate" />
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    // ===== FILTER =====
+    const tabs = document.querySelectorAll('.filter-tab');
+    const cards = document.querySelectorAll('.cert-card[data-category]');
+    const emptyState = document.getElementById('certsEmpty');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        let visible = 0;
+        cards.forEach(card => {
+          const cats = card.dataset.category || '';
+          if (filter === 'all' || cats.includes(filter)) {
+            card.classList.remove('hidden'); visible++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+        emptyState.classList.toggle('visible', visible === 0);
+      });
+    });
+
+    // ===== LIGHTBOX =====
+    function openLightbox(src, title) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxTitle').textContent = title;
+      document.getElementById('certLightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('certLightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

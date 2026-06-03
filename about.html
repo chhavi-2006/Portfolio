@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Chhavi Mishra — academic history, career objectives, and technical interests." />
+  <title>About Me | Chhavi Mishra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <style>
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start; }
+    .about-text p { color: var(--text-secondary); line-height: 1.85; margin-bottom: 1.1rem; }
+    .about-text strong { color: var(--text-primary); font-weight: 600; }
+    .about-text h2 { font-family: var(--font-display); font-size: 1.6rem; color: var(--text-primary); margin: 2rem 0 1rem; }
+    .interest-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+    .interest-tag {
+      padding: 0.4rem 0.9rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .interest-tag:hover { border-color: var(--border-accent); color: var(--accent); background: var(--accent-glow); }
+    /* Right panel */
+    .about-panel .stat-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 1.25rem;
+    }
+    .panel-stat { display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0; border-bottom: 1px solid var(--border); }
+    .panel-stat:last-child { border-bottom: none; padding-bottom: 0; }
+    .panel-stat-label { color: var(--text-secondary); font-size: 0.875rem; }
+    .panel-stat-value { color: var(--text-primary); font-weight: 600; font-size: 0.875rem; }
+    .education-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .education-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    }
+    .edu-year { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    .edu-degree { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-primary); margin-bottom: 0.3rem; }
+    .edu-uni { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .edu-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.7; }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <nav>
+    <a href="index.html" class="nav-brand"><span>CM</span>Chhavi Mishra</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="learnings.html">Learnings</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="achievements.html">Achievements</a></li>
+      <li><a href="certificates.html">Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="page-wrapper">
+    <section>
+      <div class="section-header fade-up fade-up-1">
+        <div class="section-line"></div>
+        <h1>About Me</h1>
+        <p>My story, goals, and technical path.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text fade-up fade-up-2">
+          <h2>Who I Am</h2>
+          <p>Hi, I'm <strong>Chhavi Mishra</strong>, a second-year Computer Science & Artificial Intelligence student at <strong>KLE Technological University</strong>, Hubballi. I am passionate about embedded AI systems, autonomous UAV development, computer vision, and building intelligent solutions that create real-world impact.</p>
+          <p>Through academic and competition projects — including <strong>Smart Guardian</strong> (AI motorcycle safety system), <strong>Vaani.AI</strong> (clinical documentation assistant), and <strong>ADDC 2026</strong> (All India Rank 2 in autonomous drone competition) — I have gained hands-on experience in edge-AI deployment, sensor fusion, MAVLink communication, full-stack development, and machine learning pipelines.</p>
+          <p>My goal is to become a skilled AI engineer, contribute to autonomous systems and intelligent IoT platforms, and pursue advanced research at the intersection of embedded intelligence and real-world robotics applications.</p>
+
+          <h2>Technical Interests</h2>
+          <div class="interest-tags">
+            <span class="interest-tag">Artificial Intelligence</span>
+            <span class="interest-tag">Computer Vision</span>
+            <span class="interest-tag">Autonomous UAV Systems</span>
+            <span class="interest-tag">Embedded Systems</span>
+            <span class="interest-tag">IoT & Edge Computing</span>
+            <span class="interest-tag">Full-Stack Development</span>
+            <span class="interest-tag">Machine Learning</span>
+            <span class="interest-tag">Drone Engineering</span>
+          </div>
+        </div>
+
+        <div class="about-panel fade-up fade-up-3">
+          <div class="stat-block">
+            <div class="panel-stat">
+              <span class="panel-stat-label">University</span>
+              <span class="panel-stat-value">KLE Technological University</span>
+            </div>
+            <div class="panel-stat">
+              <span class="panel-stat-label">Major</span>
+              <span class="panel-stat-value">Computer Science & AI</span>
+            </div>
+            <div class="panel-stat">
+              <span class="panel-stat-label">Study Year</span>
+              <span class="panel-stat-value">2nd Year Undergraduate</span>
+            </div>
+            <div class="panel-stat">
+              <span class="panel-stat-label">Location</span>
+              <span class="panel-stat-value">Hubballi, India</span>
+            </div>
+            <div class="panel-stat">
+              <span class="panel-stat-label">Best Rank</span>
+              <span class="panel-stat-value" style="color:var(--gold)">AIR 1 – Aerothon 2025</span>
+            </div>
+          </div>
+
+          <div class="education-card fade-up fade-up-4">
+            <div class="edu-year">2024 – Present</div>
+            <div class="edu-degree">B.Tech in Computer Science & AI</div>
+            <div class="edu-uni">KLE Technological University, Hubballi</div>
+            <div class="edu-desc">Specializing in core computer science, artificial intelligence, embedded systems, autonomous robotics, machine learning, and IoT engineering.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Chhavi Mishra. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

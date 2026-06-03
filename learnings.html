@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Academic and self-study learnings of Chhavi Mishra in AI, embedded systems, and engineering." />
+  <title>Learnings | Chhavi Mishra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+  <style>
+    /* ===== TAB BAR ===== */
+    .tab-bar {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+    .tab-btn {
+      padding: 0.65rem 1.3rem;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      letter-spacing: 0.02em;
+      border-radius: 6px 6px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .tab-btn .tab-icon { font-size: 1rem; }
+    .tab-btn.active, .tab-btn:hover { color: var(--accent); }
+    .tab-btn.active { border-bottom-color: var(--accent); background: var(--accent-glow); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== SUMMARY STRIP ===== */
+    .learnings-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .summary-stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .summary-stat:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+    .summary-stat .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .summary-stat .stat-lbl { color: var(--text-secondary); font-size: 0.8rem; }
+
+    /* ===== LEARNING GRID ===== */
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ===== LEARNING CARD ===== */
+    .learning-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .learning-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .learning-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    .learning-card:hover::before { opacity: 1; }
+
+    .lc-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .lc-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .lc-desc {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.75;
+      margin-bottom: 1.1rem;
+      flex: 1;
+    }
+
+    .lc-outcomes {
+      margin-bottom: 1.1rem;
+    }
+    .lc-outcomes-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .lc-outcome-list { list-style: none; }
+    .lc-outcome-list li {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: flex-start;
+      margin-bottom: 0.3rem;
+      line-height: 1.5;
+    }
+    .lc-outcome-list li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-size: 0.78rem;
+      margin-top: 1px;
+    }
+
+    .lc-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1rem 0;
+    }
+
+    .lc-tag-row { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .lc-tag {
+      padding: 0.18rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+      letter-spacing: 0.02em;
+    }
+
+    .lc-applied {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.03em;
+    }
+    .lc-applied::before {
+      content: '⚡';
+      font-size: 0.75rem;
+    }
+    .lc-applied span { color: var(--accent); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .learnings-summary { grid-template-columns: repeat(2, 1fr); }
+      .learning-grid { grid-template-columns: 1fr; }
+      .tab-btn { font-size: 0.8rem; padding: 0.55rem 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <nav>
+    <a href="index.html" class="nav-brand"><span>CM</span>Chhavi Mishra</a>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About Me</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="learnings.html">Learnings</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="achievements.html">Achievements</a></li>
+      <li><a href="certificates.html">Certificates</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="page-wrapper">
+    <section>
+      <div class="section-header fade-up fade-up-1">
+        <div class="section-line"></div>
+        <h1>Technical Learnings</h1>
+        <p>A deep dive into the knowledge, skills, and real-world insights I've acquired across AI, embedded systems, drone engineering, and full-stack development.</p>
+      </div>
+
+      <!-- Summary Strip -->
+      <div class="learnings-summary fade-up fade-up-2">
+        <div class="summary-stat">
+          <span class="stat-num">27+</span>
+          <span class="stat-lbl">Topics Mastered</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-num">5</span>
+          <span class="stat-lbl">Core Domains</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-num">6+</span>
+          <span class="stat-lbl">Projects Applied</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-num">3</span>
+          <span class="stat-lbl">Certifications</span>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-bar fade-up fade-up-2">
+        <button class="tab-btn active" data-tab="engineering"><span class="tab-icon">⚙️</span>Engineering</button>
+        <button class="tab-btn" data-tab="ai"><span class="tab-icon">🤖</span>AI &amp; ML</button>
+        <button class="tab-btn" data-tab="embedded"><span class="tab-icon">🛸</span>Embedded &amp; Drones</button>
+        <button class="tab-btn" data-tab="web"><span class="tab-icon">🌐</span>Web Technology</button>
+        <button class="tab-btn" data-tab="devops"><span class="tab-icon">🔧</span>DevOps &amp; Cloud</button>
+      </div>
+
+      <!-- ===== ENGINEERING EXPLORATION ===== -->
+      <div class="tab-panel active" id="tab-engineering">
+        <div class="learning-grid">
+
+          <div class="learning-card fade-up fade-up-2">
+            <div class="lc-icon-wrap">📐</div>
+            <div class="lc-title">Engineering Design Process</div>
+            <p class="lc-desc">Learned the end-to-end engineering design lifecycle — from problem identification and concept ideation to feasibility analysis, iterative prototyping, and final design review. Applied structured design thinking to transform abstract ideas into functional hardware and software solutions.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Defined clear problem statements and success criteria before building</li>
+                <li>Generated multiple concept variants and selected the most viable</li>
+                <li>Conducted peer design reviews to catch flaws before implementation</li>
+                <li>Iterated designs through 3+ sprint cycles based on test feedback</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Ideation</span>
+              <span class="lc-tag">Concept Generation</span>
+              <span class="lc-tag">Feasibility Analysis</span>
+              <span class="lc-tag">Prototyping</span>
+              <span class="lc-tag">Design Review</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Mouse Master, Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card fade-up fade-up-2">
+            <div class="lc-icon-wrap">🏃</div>
+            <div class="lc-title">Agile &amp; Sprint Development</div>
+            <p class="lc-desc">Practiced Agile methodology through structured sprint planning, backlog management, and velocity tracking. Learned to break complex engineering goals into deliverable user stories and track team progress through story points, daily syncs, and retrospectives.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Managed sprint backlogs and prioritized features by impact</li>
+                <li>Maintained velocity metrics to forecast project completion</li>
+                <li>Conducted structured retrospectives to improve team processes</li>
+                <li>Shipped working prototypes at the end of each sprint cycle</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Sprint Planning</span>
+              <span class="lc-tag">User Stories</span>
+              <span class="lc-tag">Backlog Management</span>
+              <span class="lc-tag">Story Points</span>
+              <span class="lc-tag">Velocity Tracking</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Mouse Master, Vaani.AI</span></div>
+          </div>
+
+          <div class="learning-card fade-up fade-up-3">
+            <div class="lc-icon-wrap">🔧</div>
+            <div class="lc-title">Hardware Prototyping</div>
+            <p class="lc-desc">Gained hands-on experience in physical computing — from schematic design and component selection to PCB layout concepts and 3D CAD modelling. Built functional hardware prototypes constrained by cost, size, and power requirements through iterative physical testing.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Designed compact 2×2×2 inch enclosure using 3D CAD software</li>
+                <li>Selected and integrated microcontrollers within ₹4,000 budget</li>
+                <li>Implemented circuit design with joystick, encoder, and tactile inputs</li>
+                <li>Conducted usability testing and refined ergonomics across iterations</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">3D CAD Modelling</span>
+              <span class="lc-tag">Circuit Design</span>
+              <span class="lc-tag">Component Integration</span>
+              <span class="lc-tag">PCB Concepts</span>
+              <span class="lc-tag">Usability Testing</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Mouse Master</span></div>
+          </div>
+
+          <div class="learning-card fade-up fade-up-3">
+            <div class="lc-icon-wrap">🧪</div>
+            <div class="lc-title">System Integration &amp; Testing</div>
+            <p class="lc-desc">Developed rigorous system validation skills — verifying individual subsystems in isolation before integrating them into a complete working system. Practiced field trials, edge-case testing, and debugging complex multi-component systems where hardware meets software.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Isolated and reproduced hardware-software interface bugs systematically</li>
+                <li>Executed real-world flight validation tests across multiple drone missions</li>
+                <li>Validated end-to-end accident pipelines under simulated crash conditions</li>
+                <li>Built regression test checklists to prevent reintroduction of known bugs</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Subsystem Verification</span>
+              <span class="lc-tag">End-to-End Testing</span>
+              <span class="lc-tag">Field Trials</span>
+              <span class="lc-tag">Bug Isolation</span>
+              <span class="lc-tag">Performance Validation</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian, ADDC 2026</span></div>
+          </div>
+
+          <div class="learning-card fade-up fade-up-4">
+            <div class="lc-icon-wrap">📄</div>
+            <div class="lc-title">Technical Documentation</div>
+            <p class="lc-desc">Mastered the art of technical writing — creating Software Requirements Specifications (SRS), system architecture diagrams, UML use-case models, and presentation decks that communicate complex engineering decisions clearly to both technical and non-technical audiences.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Authored SRS documents covering functional and non-functional requirements</li>
+                <li>Designed system architecture diagrams with component interaction flows</li>
+                <li>Produced UML use-case and sequence diagrams for complex systems</li>
+                <li>Delivered award-winning technical presentations at national competitions</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">SRS Documents</span>
+              <span class="lc-tag">Architecture Diagrams</span>
+              <span class="lc-tag">UML Use Case</span>
+              <span class="lc-tag">Presentation Design</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>ADDC 2026 (Best Technical Presentation)</span></div>
+          </div>
+
+          <div class="learning-card fade-up fade-up-4">
+            <div class="lc-icon-wrap">🤝</div>
+            <div class="lc-title">Teamwork &amp; Cross-functional Collaboration</div>
+            <p class="lc-desc">Built strong collaboration skills while working in interdisciplinary teams that span hardware engineers, AI developers, and project managers. Learned to allocate roles by strength, resolve technical disagreements constructively, and maintain shared codebases across contributors.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Led the avionics & ML subsystem in a 5-member national competition team</li>
+                <li>Facilitated code reviews and ensured consistent coding standards</li>
+                <li>Coordinated hardware and software integration milestones across sub-teams</li>
+                <li>Managed shared Git repositories with branching and merge strategies</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Interdisciplinary Teams</span>
+              <span class="lc-tag">Role Allocation</span>
+              <span class="lc-tag">Code Reviews</span>
+              <span class="lc-tag">Git Workflows</span>
+              <span class="lc-tag">Communication</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian, Aerothon 2025, ADDC 2026</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== AI & MACHINE LEARNING ===== -->
+      <div class="tab-panel" id="tab-ai">
+        <div class="learning-grid">
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">👁️</div>
+            <div class="lc-title">Computer Vision Pipelines</div>
+            <p class="lc-desc">Built production-grade real-time computer vision pipelines using OpenCV and deep learning frameworks. Learned to optimize inference for edge hardware by applying frame skipping, resolution downscaling, and model quantization to achieve real-time performance on Raspberry Pi.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Built a tailgating detection pipeline running at 15+ FPS on Raspberry Pi 5</li>
+                <li>Applied Gaussian blur and color normalization for robust frame preprocessing</li>
+                <li>Optimized inference pipeline to reduce CPU usage by ~40% through frame skipping</li>
+                <li>Integrated results into ZeroMQ messaging for real-time multi-process communication</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Object Detection</span>
+              <span class="lc-tag">OpenCV</span>
+              <span class="lc-tag">Image Preprocessing</span>
+              <span class="lc-tag">Frame Skipping</span>
+              <span class="lc-tag">Inference Optimization</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian, Online Exam Proctoring</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🎯</div>
+            <div class="lc-title">YOLO Model Training &amp; Dataset Engineering</div>
+            <p class="lc-desc">End-to-end expertise in training custom YOLOv8 object detection models — from raw data collection and annotation to synthetic augmentation, hyperparameter tuning, and model evaluation. Trained models that operate under challenging aerial and low-light conditions for UAV applications.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Annotated 2,000+ images using Roboflow for disaster target detection</li>
+                <li>Generated synthetic training data to improve model robustness in edge cases</li>
+                <li>Tuned YOLOv8 hyperparameters to achieve optimal mAP@50 on validation set</li>
+                <li>Deployed trained models on Raspberry Pi for real-time aerial inference</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">YOLOv8</span>
+              <span class="lc-tag">Dataset Annotation</span>
+              <span class="lc-tag">Synthetic Data Generation</span>
+              <span class="lc-tag">Hyperparameter Tuning</span>
+              <span class="lc-tag">mAP Metrics</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Aerothon 2025, Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">📊</div>
+            <div class="lc-title">Algorithm Benchmarking &amp; Profiling</div>
+            <p class="lc-desc">Developed a systematic approach to evaluating and comparing AI algorithm performance across multiple dimensions — latency, accuracy, false-positive rate, and resource consumption. Used profiling tools to identify bottlenecks in computer vision pipelines and optimize accordingly.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Benchmarked YOLO, MediaPipe, and Dlib across latency and CPU/GPU metrics</li>
+                <li>Analysed false-positive and false-negative trade-offs for proctoring algorithms</li>
+                <li>Visualized benchmark data through an interactive React.js dashboard</li>
+                <li>Identified optimal algorithm for each use-case based on resource constraints</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Latency Analysis</span>
+              <span class="lc-tag">CPU/GPU Profiling</span>
+              <span class="lc-tag">False-Positive Rate</span>
+              <span class="lc-tag">Comparative Evaluation</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Online Exam Proctoring Analyser</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🧠</div>
+            <div class="lc-title">NLP &amp; LLM Integration</div>
+            <p class="lc-desc">Learned to integrate large language models into production applications via API — engineering prompts for structured outputs, extracting named medical entities, and chaining LLM calls for multi-step reasoning. Applied spaCy and Gemini/Groq APIs in a real healthcare documentation product.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Engineered system prompts that reliably extract symptoms, diagnoses, and vitals</li>
+                <li>Built LLM-powered clinical chatbot with Groq Llama for medical record querying</li>
+                <li>Chained Gemini 2.5 calls for transcription → extraction → report generation</li>
+                <li>Applied spaCy for offline entity extraction as a fallback layer</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Prompt Engineering</span>
+              <span class="lc-tag">Gemini / Groq APIs</span>
+              <span class="lc-tag">Entity Extraction</span>
+              <span class="lc-tag">LLM Chaining</span>
+              <span class="lc-tag">spaCy</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🎙️</div>
+            <div class="lc-title">Speech Recognition &amp; Real-time STT</div>
+            <p class="lc-desc">Integrated real-time multilingual speech-to-text transcription using the Sarvam AI API and Web Audio API. Learned to handle audio streaming, buffer management, and language detection to produce accurate clinical transcriptions in English and Indian regional languages.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Streamed microphone audio to Sarvam AI for real-time multilingual transcription</li>
+                <li>Implemented audio buffering to handle network latency in streaming pipelines</li>
+                <li>Built a recording UI with live word-count feedback and transcript editing</li>
+                <li>Processed 10+ Indian languages in a single unified transcription pipeline</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Sarvam AI</span>
+              <span class="lc-tag">Web Audio API</span>
+              <span class="lc-tag">Multilingual STT</span>
+              <span class="lc-tag">Audio Streaming</span>
+              <span class="lc-tag">Real-time Processing</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🔍</div>
+            <div class="lc-title">Behavioural Anomaly Detection</div>
+            <p class="lc-desc">Applied computer vision techniques for real-time behavioural monitoring — detecting head pose deviations, eye-gaze direction, multiple faces, and audio anomalies to infer suspicious activity. Combined multiple models in a fusion architecture with confidence thresholding for reliable alerts.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Implemented MediaPipe-based head pose estimation for pitch/yaw/roll analysis</li>
+                <li>Built multi-face detection to flag presence of unauthorized persons</li>
+                <li>Combined eye gaze and head pose into a weighted anomaly score</li>
+                <li>Integrated audio analysis to detect background speech and noise violations</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Head Pose Estimation</span>
+              <span class="lc-tag">Eye Gaze Tracking</span>
+              <span class="lc-tag">MediaPipe</span>
+              <span class="lc-tag">Audio Monitoring</span>
+              <span class="lc-tag">Fusion Architecture</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Online Exam Proctoring Analyser</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== EMBEDDED & DRONE SYSTEMS ===== -->
+      <div class="tab-panel" id="tab-embedded">
+        <div class="learning-grid">
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">📡</div>
+            <div class="lc-title">MAVLink &amp; Pixhawk Integration</div>
+            <p class="lc-desc">Developed deep expertise in drone flight controller integration using the MAVLink telemetry protocol with Pixhawk/PX4. Learned to parse IMU sensor data streams, implement crash detection logic using physics-based thresholds, and send command sequences to the flight controller from a companion computer.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Configured Pixhawk–Raspberry Pi serial communication via MAVLink protocol</li>
+                <li>Parsed real-time IMU streams (accelerometer, gyroscope) for crash detection</li>
+                <li>Implemented physics-based thresholds for roll/pitch anomaly identification</li>
+                <li>Triggered automated emergency response sequences on crash event detection</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">MAVLink</span>
+              <span class="lc-tag">Pixhawk</span>
+              <span class="lc-tag">IMU Data Parsing</span>
+              <span class="lc-tag">Crash Detection</span>
+              <span class="lc-tag">Serial Communication</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🗺️</div>
+            <div class="lc-title">Autonomous Mission Planning</div>
+            <p class="lc-desc">Designed and tested fully autonomous UAV mission profiles — including GPS waypoint navigation, QR code target search and identification, precision payload delivery, and safe Return-To-Launch (RTL) sequences. Worked with Mission Planner, ArduPilot, and PX4 for simulation and real-world flight validation.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Designed multi-waypoint GPS missions with altitude and speed profiles</li>
+                <li>Integrated QR code detection into the autonomous mission stack</li>
+                <li>Validated RTL and failsafe sequences under simulated signal loss conditions</li>
+                <li>Completed multiple real-world flight trials achieving minimal positional drift</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">GPS Waypoints</span>
+              <span class="lc-tag">Mission Planner</span>
+              <span class="lc-tag">PX4 / ArduPilot</span>
+              <span class="lc-tag">RTL Sequences</span>
+              <span class="lc-tag">Simulation Testing</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>ADDC 2026</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🏗️</div>
+            <div class="lc-title">IoT &amp; Edge–Fog–Cloud Architecture</div>
+            <p class="lc-desc">Implemented a three-tier distributed computing architecture for real-time IoT applications. Understood how to partition workloads across edge devices (real-time sensing), fog nodes (local AI inference), and cloud backends (storage, analytics, alerting) to balance latency, bandwidth, and reliability requirements.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Deployed YOLOv8 AI inference at the fog layer on Raspberry Pi 5</li>
+                <li>Streamed crash evidence footage to Supabase cloud on event trigger</li>
+                <li>Used ZeroMQ pub/sub for inter-process communication between edge modules</li>
+                <li>Implemented circular video buffer at the edge to preserve pre-crash footage</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Edge Computing</span>
+              <span class="lc-tag">Fog AI</span>
+              <span class="lc-tag">Cloud Upload</span>
+              <span class="lc-tag">ZeroMQ IPC</span>
+              <span class="lc-tag">Real-time Streaming</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🍓</div>
+            <div class="lc-title">Raspberry Pi Systems Engineering</div>
+            <p class="lc-desc">Gained comprehensive Raspberry Pi expertise — from OS setup, headless configuration, and network management to GPIO interfacing, camera integration, and service automation using systemd. Deployed production AI workloads on Raspberry Pi with power and thermal management considerations for drone applications.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Configured Raspberry Pi 5 for headless operation with SSH and Wi-Fi hotspot</li>
+                <li>Set up systemd services for auto-start of AI pipelines on boot</li>
+                <li>Interfaced camera module and GPIO sensors for the Smart Guardian system</li>
+                <li>Managed thermal throttling and power consumption for drone payload constraints</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Raspberry Pi 5</span>
+              <span class="lc-tag">Linux / SSH</span>
+              <span class="lc-tag">GPIO Interfacing</span>
+              <span class="lc-tag">systemd Services</span>
+              <span class="lc-tag">Camera Integration</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian, ADDC 2026</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🧲</div>
+            <div class="lc-title">Sensor Fusion</div>
+            <p class="lc-desc">Studied and applied sensor fusion techniques to combine data from multiple independent sensors — accelerometers, gyroscopes, and GPS modules — to produce more reliable state estimates than any single sensor alone. Implemented event-trigger logic based on fused multi-sensor thresholds.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Fused IMU accelerometer and gyroscope data to detect crash orientation</li>
+                <li>Combined GPS position with IMU motion for reliable crash location tagging</li>
+                <li>Tuned multi-axis threshold values through empirical field testing</li>
+                <li>Implemented debounce logic to suppress false triggers from vibrations</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Accelerometer / Gyroscope</span>
+              <span class="lc-tag">GPS Fusion</span>
+              <span class="lc-tag">Threshold Detection</span>
+              <span class="lc-tag">Event Triggers</span>
+              <span class="lc-tag">Debounce Logic</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">✈️</div>
+            <div class="lc-title">UAV Systems Testing &amp; Validation</div>
+            <p class="lc-desc">Developed systematic UAV testing workflows covering pre-flight checklists, propulsion tests, communication link validation, and mission rehearsal under controlled conditions before real-world flights. Executed payload drop tests, QR code detection validation, and competition-grade flight trials.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Created and executed 20-point pre-flight safety checklists for every flight</li>
+                <li>Validated QR code detection pipeline at 5m, 10m, and 15m altitude variants</li>
+                <li>Tested payload drop accuracy with fragile cargo across 10+ trial runs</li>
+                <li>Achieved mission success rate of 90%+ during competition validation rounds</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Pre-flight Checks</span>
+              <span class="lc-tag">Payload Drop Testing</span>
+              <span class="lc-tag">QR Code Detection</span>
+              <span class="lc-tag">Competition Validation</span>
+              <span class="lc-tag">Safety Protocols</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>ADDC 2026, Aerothon 2025</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== WEB TECHNOLOGY ===== -->
+      <div class="tab-panel" id="tab-web">
+        <div class="learning-grid">
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🏛️</div>
+            <div class="lc-title">HTML5 Semantic Structure &amp; SEO</div>
+            <p class="lc-desc">Mastered writing clean, semantic HTML5 that is accessible, SEO-optimized, and maintainable. Learned to use the right structural elements, configure meta tags, implement Open Graph data, and design accessible form interactions — building web pages that rank well and work for all users.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Used semantic landmarks (main, section, article, nav) for screen-reader support</li>
+                <li>Configured meta descriptions, Open Graph, and canonical URLs for SEO</li>
+                <li>Implemented ARIA attributes and keyboard navigation for accessibility</li>
+                <li>Structured heading hierarchy (h1→h6) for proper document outline</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Semantic HTML5</span>
+              <span class="lc-tag">SEO Metadata</span>
+              <span class="lc-tag">Accessibility (a11y)</span>
+              <span class="lc-tag">ARIA Attributes</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI, Portfolio Website</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🎨</div>
+            <div class="lc-title">CSS3 &amp; Advanced Responsive Design</div>
+            <p class="lc-desc">Built sophisticated responsive UI layouts using CSS Flexbox, Grid, and custom properties (variables). Mastered keyframe animations, transitions, glassmorphism effects, and CSS theming with light/dark mode support — creating premium-feeling interfaces without any CSS framework.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Built fully responsive multi-column layouts using CSS Grid with auto-fill</li>
+                <li>Implemented smooth keyframe animations and GPU-accelerated transitions</li>
+                <li>Created a complete light/dark theme system using CSS custom properties</li>
+                <li>Applied glassmorphism cards with backdrop-filter blur for premium aesthetics</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">CSS Grid</span>
+              <span class="lc-tag">Flexbox</span>
+              <span class="lc-tag">CSS Variables</span>
+              <span class="lc-tag">Keyframe Animations</span>
+              <span class="lc-tag">Glassmorphism</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Portfolio Website, Vaani.AI</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">⚙️</div>
+            <div class="lc-title">Node.js Backend Development</div>
+            <p class="lc-desc">Built RESTful backend APIs using Node.js and Express.js with complete authentication and authorization infrastructure. Implemented JWT-based session management, role-based access control (RBAC), password hashing with bcrypt, and structured error handling for a production healthcare application.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Designed a modular Express.js architecture with route, service, and controller layers</li>
+                <li>Implemented JWT access + refresh token rotation for secure session management</li>
+                <li>Built RBAC middleware restricting endpoints by Doctor/Nurse/Admin roles</li>
+                <li>Secured user passwords with bcrypt hashing and salt rounds</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Node.js</span>
+              <span class="lc-tag">Express.js</span>
+              <span class="lc-tag">JWT Auth</span>
+              <span class="lc-tag">RBAC</span>
+              <span class="lc-tag">bcrypt</span>
+              <span class="lc-tag">REST API Design</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🗄️</div>
+            <div class="lc-title">Database Design &amp; Management</div>
+            <p class="lc-desc">Learned relational database design from first principles — entity-relationship modelling, normalization, foreign key constraints, and query optimization. Worked with PostgreSQL/MySQL via Supabase, writing efficient JOIN queries, stored procedures (RPC), and managing migrations in production environments.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Designed normalized schemas with 10+ tables for Vaani.AI clinical records</li>
+                <li>Wrote Supabase RPC functions for complex aggregation queries</li>
+                <li>Implemented row-level security (RLS) policies in Supabase for data isolation</li>
+                <li>Optimized slow queries using indexing strategies on high-read tables</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">PostgreSQL</span>
+              <span class="lc-tag">Supabase RPC</span>
+              <span class="lc-tag">Schema Design</span>
+              <span class="lc-tag">Row-level Security</span>
+              <span class="lc-tag">Query Optimization</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI, Smart Guardian</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">📈</div>
+            <div class="lc-title">Dashboard &amp; Data Visualization</div>
+            <p class="lc-desc">Built interactive data dashboards and analytical UIs using Streamlit, React.js, and Chart.js. Learned to transform raw telemetry and model benchmark data into intuitive visualizations — helping stakeholders understand system behaviour through charts, tables, and real-time metric panels.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Built a Streamlit dashboard for Smart Guardian incident review and metrics</li>
+                <li>Created a React.js dashboard for proctoring algorithm benchmark comparisons</li>
+                <li>Visualized model latency, CPU utilization, and false-positive rates with Chart.js</li>
+                <li>Added real-time data refresh and filter controls to Streamlit UI</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Streamlit</span>
+              <span class="lc-tag">React.js</span>
+              <span class="lc-tag">Chart.js</span>
+              <span class="lc-tag">Matplotlib</span>
+              <span class="lc-tag">Pandas</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Smart Guardian, Online Exam Proctoring</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🔌</div>
+            <div class="lc-title">API Integration &amp; External Services</div>
+            <p class="lc-desc">Gained extensive experience integrating third-party APIs and external services — LLM providers, speech APIs, messaging platforms, and cloud storage. Learned to handle API rate limits, authentication flows, webhook events, and graceful error recovery when external services are unavailable.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Integrated Gemini 2.5 and Groq Llama APIs with structured output parsing</li>
+                <li>Implemented WhatsApp Business API for automated SOS alert delivery</li>
+                <li>Set up Supabase storage webhooks for automatic cloud upload on file creation</li>
+                <li>Built retry logic with exponential backoff for flaky network conditions</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">REST API Integration</span>
+              <span class="lc-tag">Webhooks</span>
+              <span class="lc-tag">Gemini / Groq APIs</span>
+              <span class="lc-tag">WhatsApp API</span>
+              <span class="lc-tag">Error Handling</span>
+            </div>
+            <div class="lc-applied">Applied in: <span>Vaani.AI, Smart Guardian</span></div>
+          </div>
+
+        </div>
+      </div>
+      <!-- ===== DEVOPS & CLOUD ===== -->
+      <div class="tab-panel" id="tab-devops">
+        <div class="learning-grid">
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">♾️</div>
+            <div class="lc-title">DevOps Foundations &amp; Culture</div>
+            <p class="lc-desc">Studied the core principles, philosophy, and cultural practices that define modern DevOps. Learned how DevOps bridges the gap between development and operations teams by emphasizing collaboration, shared responsibility, and a continuous improvement mindset. Completed both Infosys Springboard and IBM edX certifications to validate foundational DevOps knowledge.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Understood the CALMS framework (Culture, Automation, Lean, Measurement, Sharing)</li>
+                <li>Applied Agile and Scrum concepts alongside DevOps workflows in sprint-based projects</li>
+                <li>Learned shift-left testing and how to embed quality checks early in the pipeline</li>
+                <li>Appreciated the role of psychological safety and blameless post-mortems in DevOps culture</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">CALMS Framework</span>
+              <span class="lc-tag">Agile + DevOps</span>
+              <span class="lc-tag">Shift-Left Testing</span>
+              <span class="lc-tag">SRE Concepts</span>
+              <span class="lc-tag">Blameless Culture</span>
+            </div>
+            <div class="lc-applied">Certified by: <span>Infosys Springboard, IBM / edX</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">🔄</div>
+            <div class="lc-title">CI/CD Pipelines &amp; Automation</div>
+            <p class="lc-desc">Learned the end-to-end mechanics of Continuous Integration and Continuous Delivery pipelines — from code commits and automated builds to unit testing, artifact packaging, and deployment automation. Understood how to design pipelines that reduce manual toil, catch errors early, and deliver software reliably and frequently.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Designed multi-stage CI/CD pipeline workflows with build, test, and deploy stages</li>
+                <li>Understood Git branching strategies (GitFlow, trunk-based development) for team collaboration</li>
+                <li>Studied automated testing integration at unit, integration, and end-to-end test levels</li>
+                <li>Learned artifact versioning, environment promotion (dev → staging → prod) strategies</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">CI/CD Pipelines</span>
+              <span class="lc-tag">GitHub Actions</span>
+              <span class="lc-tag">Build Automation</span>
+              <span class="lc-tag">GitFlow</span>
+              <span class="lc-tag">Artifact Management</span>
+            </div>
+            <div class="lc-applied">Certified by: <span>Infosys TechA DevOps Engineer, Infosys Foundation</span></div>
+          </div>
+
+          <div class="learning-card">
+            <div class="lc-icon-wrap">☁️</div>
+            <div class="lc-title">Cloud-Native Practices &amp; Containerisation</div>
+            <p class="lc-desc">Gained knowledge in cloud-native development approaches including containerisation with Docker, container orchestration concepts with Kubernetes, and infrastructure-as-code principles. Understood how modern applications are designed to be scalable, observable, and resilient across cloud environments — skills reinforced through the IBM and Infosys TechA DevOps certifications.</p>
+            <div class="lc-outcomes">
+              <div class="lc-outcomes-label">Key Outcomes</div>
+              <ul class="lc-outcome-list">
+                <li>Understood Docker image layering, container lifecycles, and networking fundamentals</li>
+                <li>Studied Kubernetes cluster concepts: Pods, Services, Deployments, and ConfigMaps</li>
+                <li>Learned infrastructure-as-code (IaC) principles for reproducible environment provisioning</li>
+                <li>Explored monitoring and observability tools for tracking service health in production</li>
+              </ul>
+            </div>
+            <div class="lc-divider"></div>
+            <div class="lc-tag-row">
+              <span class="lc-tag">Docker</span>
+              <span class="lc-tag">Kubernetes</span>
+              <span class="lc-tag">Infrastructure as Code</span>
+              <span class="lc-tag">Cloud Native</span>
+              <span class="lc-tag">Observability</span>
+            </div>
+            <div class="lc-applied">Certified by: <span>IBM edX, Infosys TechA DevOps Engineer</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Chhavi Mishra. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      </div>
+    </footer>
+  </div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
